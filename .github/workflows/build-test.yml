@@ -16,79 +16,55 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
-      - name: Setup node 16
+      - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
-
+          node-version-file: '.node-version'
       - run: npm ci
-
       - run: npm run build
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-output
+          path: dist/**
+          retention-days: 5
 
-      - name: Check if dist/index.js needs to be rebuilt
-        run: diff <(git status dist/index.js --short) <(echo -n "")
-
-  format-check:
+  code-style-check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
-      - name: Setup node 16
+      - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
-
+          node-version-file: '.node-version'
       - run: npm ci
+      - name: Run ESLint
+        run: npm run eslint:ci
+      - name: Run Prettier
+        run: npm run prettier:ci
+      - name: Run Typescript check
+        run: npm run typescript
 
-      - run: npm run format-check
-
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Setup node 16
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-
-      - run: npm ci
-
-      - run: npm test
-
-  runSdkManager:
+  test_sdk_manager:
     runs-on: ${{ matrix.os }}
+    needs:
+      - build
     strategy:
       fail-fast: false
       matrix:
-        os: [ ubuntu-18.04, ubuntu-20.04, ubuntu-22.04, macos-11, macos-12, windows-2019, windows-2022 ]
+        os: [ubuntu-22.04]
 
     steps:
       - uses: actions/checkout@v3
-
-      - name: Setup node 16
+      - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
-
+          node-version-file: '.node-version'
       - run: npm ci
-      - run: npm run build
-
-      - run: node dist/index.js
-
-      - run: sdkmanager --list
-
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Setup node 16
-        uses: actions/setup-node@v3
+      - name: Download artifact
+        uses: actions/download-artifact@v3
         with:
-          node-version: '16'
-
-      - run: npm ci
-
-      - run: npm run lint
+          name: build-output
+      - run: node dist/main.mjs
+      - name: Verify sdk manager installation
+        run: sdkmanager --list

@@ -1,10 +1,23 @@
 name: 'Setup Android SDK Tools'
 author: 'Android-Actions'
 description: 'Setup the Android SDK Tools and add them to the path'
+inputs:
+  cmdline_tools_version:
+    required: false
+    description: 'The cmdline-tools version to download via sdkmanager https://developer.android.com/tools/releases/cmdline-tools'
+    default: 'latest'
+  commandline_tools_version:
+    required: false
+    description: 'The command line tools version to download, taken from: https://developer.android.com/studio'
+    default: '10406996'
+  android_sdk_root:
+    required: false
+    description: 'The path to download the SDK to'
+    default: '10406996'
 
 runs:
-  using: 'node16'
-  main: 'dist/index.js'
+  using: 'node18'
+  main: 'dist/main.mjs'
 
 branding:
   icon: 'list'
