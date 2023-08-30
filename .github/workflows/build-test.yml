@@ -69,7 +69,6 @@ jobs:
         with:
           distribution: corretto
           java-version: 17
-          cache: 'gradle'
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
