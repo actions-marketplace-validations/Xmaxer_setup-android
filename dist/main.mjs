@@ -7674,8 +7674,10 @@ var fse = __toESM(require_lib2(), 1);
 import * as path from "path";
 import * as fs from "fs";
 import * as os from "os";
-var CMDLINE_TOOLS_VERSION = core.getInput("cmdline_tools_version");
-var COMMANDLINE_TOOLS_VERSION = core.getInput("commandline_tools_version");
+import { fileURLToPath } from "url";
+var __dirname2 = path.dirname(fileURLToPath(import.meta.url));
+var CMDLINE_TOOLS_VERSION = core.getInput("cmdline_tools_version") || process.env.CMDLINE_TOOLS_VERSION;
+var COMMANDLINE_TOOLS_VERSION = core.getInput("commandline_tools_version") || process.env.COMMAND_LINE_TOOLS_VERSION;
 var COMMANDLINE_TOOLS_WIN_URL = `https://dl.google.com/android/repository/commandlinetools-win-${COMMANDLINE_TOOLS_VERSION}_latest.zip`;
 var COMMANDLINE_TOOLS_MAC_URL = `https://dl.google.com/android/repository/commandlinetools-mac-${COMMANDLINE_TOOLS_VERSION}_latest.zip`;
 var COMMANDLINE_TOOLS_LIN_URL = `https://dl.google.com/android/repository/commandlinetools-linux-${COMMANDLINE_TOOLS_VERSION}_latest.zip`;
@@ -7799,12 +7801,15 @@ async function run() {
   await callSdkManager(sdkManager, "--licenses");
   await callSdkManager(sdkManager, "tools");
   await callSdkManager(sdkManager, "platform-tools");
-  core.setOutput("ANDROID_COMMANDLINE_TOOLS_VERSION", COMMANDLINE_TOOLS_VERSION);
+  core.setOutput(
+    "ANDROID_COMMANDLINE_TOOLS_VERSION",
+    COMMANDLINE_TOOLS_VERSION
+  );
   core.exportVariable("ANDROID_HOME", ANDROID_SDK_ROOT);
   core.exportVariable("ANDROID_SDK_ROOT", ANDROID_SDK_ROOT);
   core.addPath(path.dirname(sdkManager));
   core.addPath(path.join(ANDROID_SDK_ROOT, "platform-tools"));
   core.debug("add matchers");
-  console.log(`##[add-matcher]${path.join(__dirname, "..", "matchers.json")}`);
+  console.log(`##[add-matcher]${path.join(__dirname2, "..", "matchers.json")}`);
 }
 await run();
