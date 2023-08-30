@@ -34,7 +34,7 @@ steps:
       java-version: 1.8
 
   - name: Setup Android SDK
-    uses: android-actions/setup-android@v2
+    uses: Xmaxer/setup-android@v1
 
   - name: Build SampleApplication
     run: ./gradlew --no-daemon build
