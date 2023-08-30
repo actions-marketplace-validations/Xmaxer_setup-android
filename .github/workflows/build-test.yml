@@ -47,6 +47,9 @@ jobs:
         run: npm run typescript
 
   test_sdk_manager:
+    env:
+      CMDLINE_TOOLS_VERSION: latest
+      COMMAND_LINE_TOOLS_VERSION: 10406996
     runs-on: ${{ matrix.os }}
     needs:
       - build

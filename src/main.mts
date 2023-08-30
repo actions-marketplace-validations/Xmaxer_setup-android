@@ -6,8 +6,12 @@ import * as fs from 'fs';
 import * as fse from 'fs-extra';
 import * as os from 'os';
 
-const CMDLINE_TOOLS_VERSION = core.getInput('cmdline_tools_version');
-const COMMANDLINE_TOOLS_VERSION = core.getInput('commandline_tools_version');
+const CMDLINE_TOOLS_VERSION =
+  core.getInput('cmdline_tools_version') ||
+  (process.env.CMDLINE_TOOLS_VERSION as string);
+const COMMANDLINE_TOOLS_VERSION =
+  core.getInput('commandline_tools_version') ||
+  (process.env.COMMAND_LINE_TOOLS_VERSION as string);
 
 const COMMANDLINE_TOOLS_WIN_URL = `https://dl.google.com/android/repository/commandlinetools-win-${COMMANDLINE_TOOLS_VERSION}_latest.zip`;
 const COMMANDLINE_TOOLS_MAC_URL = `https://dl.google.com/android/repository/commandlinetools-mac-${COMMANDLINE_TOOLS_VERSION}_latest.zip`;

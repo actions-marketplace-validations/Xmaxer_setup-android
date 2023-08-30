@@ -13,7 +13,6 @@ inputs:
   android_sdk_root:
     required: false
     description: 'The path to download the SDK to'
-    default: '10406996'
 
 runs:
   using: 'node18'
