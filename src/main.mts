@@ -5,6 +5,9 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as fse from 'fs-extra';
 import * as os from 'os';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const CMDLINE_TOOLS_VERSION =
   core.getInput('cmdline_tools_version') ||
