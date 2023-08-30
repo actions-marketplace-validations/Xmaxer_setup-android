@@ -64,7 +64,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: '.node-version'
-      - run: npm ci
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: corretto
+          java-version: 17
+          cache: 'gradle'
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
