@@ -40,7 +40,7 @@ jobs:
           node-version-file: '.node-version'
       - run: npm ci
       - name: Run ESLint
-        run: npm run eslint:ci
+        run: npm run lint:ci
       - name: Run Prettier
         run: npm run prettier:ci
       - name: Run Typescript check
@@ -66,6 +66,8 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build-output
+      - run: ls -la .
+      - run: ls -la dist
       - run: node dist/main.mjs
       - name: Verify sdk manager installation
         run: sdkmanager --list
