@@ -16,7 +16,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
@@ -33,7 +33,7 @@ jobs:
   code-style-check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
@@ -59,7 +59,7 @@ jobs:
         os: [ubuntu-22.04]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
